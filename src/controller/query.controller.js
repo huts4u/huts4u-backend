@@ -124,13 +124,17 @@ exports.searchData = async (req, res) => {
     let page = req.body.page;
     let pageSize = req.body.pageSize;
     let order = req.body.order;
+    let includeTable = req.body.includeTable || null; // Get related table name
+
     let result = await queryService.getAllDataByCondAndPagination(
       req.tableName,
       cond,
       page,
       pageSize,
-      order
+      order,
+      includeTable
     );
+
     res.status(httpres.OK).json(prepareResponse("OK", GET, result, null));
   } catch (error) {
     res

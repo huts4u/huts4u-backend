@@ -6,6 +6,13 @@ const {
   verifyOTP,
   register,
   getProfile,
+  Signup,
+  Signin,
+  updateProfile,
+  deleteProfile,
+  fileUploader,
+  getOneProfile,
+  resetPassword,
 } = require("../controller/auth.controller");
 const {
   signupValidation,
@@ -33,5 +40,48 @@ router.route("/create").post(
 router
   .route("/profile/:id")
   .get(asyncHandler("user", asyncHandler("user", getProfile)));
+
+router.route("/register").post(
+  prepareBody,
+  // signupValidation,
+  asyncHandler("user", checkMail),
+  asyncHandler("user", Signup)
+);
+
+//USER_LOGIN
+router
+  .route("/login")
+  .post(
+    prepareBody,
+    signinValidation,
+    asyncHandler("user", asyncHandler("", Signin))
+  );
+
+//GET the PROFILE
+router
+  .route("/profile")
+  .get(verifySign, asyncHandler("user", asyncHandler("user", getProfile)));
+
+//update the PROFILE
+router
+  .route("/update-profile")
+  .patch(prepareBody, verifySign, asyncHandler("user", updateProfile));
+
+//delete the PROFILE
+router
+  .route("/delete-profile")
+  .delete(verifySign, asyncHandler("user", deleteProfile));
+
+//File-Uploader
+router.route("/upload-doc").post(upload.array("files", 20), fileUploader);
+
+router.route("/get-one-record/:id").get(asyncHandler("user", getOneProfile));
+
+//RESET-PASSWORD
+router.route("/reset-password").patch(
+  // prepareBody,
+  reset,
+  asyncHandler("user", resetPassword)
+);
 
 module.exports = router;

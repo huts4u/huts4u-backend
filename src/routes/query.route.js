@@ -20,10 +20,7 @@ router.route("/create").post(
   //  modelvalidate,
   asyncHandler("", createData)
 );
-router.route("/insertMany").post(
-  // prepareBody,
-  asyncHandler("", insertManyData)
-);
+router.route("/insertMany").post(prepareBody, asyncHandler("", insertManyData));
 router.route("/get-all-record").get(prepareBody, asyncHandler("", getAllRecod));
 router
   .route("/get-all-record-with-belongs-to")

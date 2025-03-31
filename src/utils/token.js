@@ -9,9 +9,20 @@ const {
   SERVER_ERROR_MESSAGE,
 } = require("./messages");
 
-let generateSign = (phoneNumber, id) => {
-  var token = jwt.sign({ phoneNumber, id }, JWT_SECRET_KEY, {
-    expiresIn: "7d",
+let generateSign1 = (email_id, name, user_status, id, role) => {
+  var token = jwt.sign(
+    { email_id, name, id, user_status, role },
+    JWT_SECRET_KEY,
+    {
+      expiresIn: "1d",
+    }
+  );
+  return token;
+};
+
+let generateSign = (phoneNumber, id, name, role) => {
+  var token = jwt.sign({ phoneNumber, id, name, role }, JWT_SECRET_KEY, {
+    expiresIn: "30d",
   });
   return token;
 };
@@ -44,4 +55,5 @@ let verifySign = (req, res, next) => {
 module.exports = {
   generateSign,
   verifySign,
+  generateSign1,
 };

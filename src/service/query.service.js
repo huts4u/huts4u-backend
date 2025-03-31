@@ -8,18 +8,81 @@ let addData = async (tableName, obj) => {
 let addBulkCreate = async (tableName, obj) => {
   return await model[tableName].bulkCreate(obj);
 };
+// let getAllDataByCondAndPagination = async (
+//   tableName,
+//   cond,
+//   page,
+//   pageSize,
+//   order
+// ) => {
+//   const offset = page * pageSize;
+//   const limit = pageSize;
+//   let filter = cond.filter;
+//   let fields = cond.fields;
+//   delete cond.filter;
+//   if (filter !== "") {
+//     let fieldToSearch = [];
+//     return async
+//       .each(fields, (field, after_field) => {
+//         fieldToSearch.push({ [field]: { [Op.like]: `%${filter}%` } });
+//         after_field();
+//       })
+//       .then(async () => {
+//         cond = {
+//           ...cond,
+//           [Op.or]: fieldToSearch,
+//         };
+//         return await model[tableName].findAndCountAll({
+//           limit,
+//           offset,
+//           where: cond,
+//           order,
+//           // order: [['createdAt', order]],
+//         });
+//       });
+//   } else {
+//     return await model[tableName].findAndCountAll({
+//       limit,
+//       offset,
+//       where: cond,
+//       order: order,
+//     });
+//   }
+// };
+
 let getAllDataByCondAndPagination = async (
   tableName,
   cond,
   page,
   pageSize,
-  order
+  order,
+  includeTable = null
 ) => {
   const offset = page * pageSize;
   const limit = pageSize;
   let filter = cond.filter;
   let fields = cond.fields;
   delete cond.filter;
+
+  let queryOptions = {
+    limit,
+    offset,
+    where: cond,
+    order,
+  };
+
+  // ✅ Ensure `includeTable` matches alias in models
+  if (includeTable && model[includeTable]) {
+    queryOptions.include = [
+      {
+        model: model[includeTable],
+        as: includeTable, // ✅ Use the correct alias
+      },
+    ];
+  }
+
+  console.log("Executing Query with Options:", queryOptions);
+
   if (filter !== "") {
     let fieldToSearch = [];
     return async
@@ -28,25 +91,14 @@ let getAllDataByCondAndPagination = async (
         after_field();
       })
       .then(async () => {
-        cond = {
-          ...cond,
+        queryOptions.where = {
+          ...queryOptions.where,
           [Op.or]: fieldToSearch,
         };
-        return await model[tableName].findAndCountAll({
-          limit,
-          offset,
-          where: cond,
-          order,
-          // order: [['createdAt', order]],
-        });
+        return await model[tableName].findAndCountAll(queryOptions);
       });
   } else {
-    return await model[tableName].findAndCountAll({
-      limit,
-      offset,
-      where: cond,
-      order: order,
-    });
+    return await model[tableName].findAndCountAll(queryOptions);
   }
 };
 
