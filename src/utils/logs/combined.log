@@ -3683,3 +3683,18 @@ notNull Violation: payment.amount cannot be null
 2025-04-01 00:18:57 [INFO]: server is running on port 8080
 2025-04-01 00:18:57 [INFO]: Database Connected Successfully
 2025-04-01 00:19:00 [INFO]: Database Synced Successfully
+2025-04-01 02:41:32 [INFO]: server is running on port 8080
+2025-04-01 02:41:32 [ERROR]: Error Connecting to Database Access denied for user 'admin'@'103.39.242.124' (using password: YES)
+2025-04-01 02:42:44 [INFO]: server is running on port 8080
+2025-04-01 02:42:44 [ERROR]: Error Connecting to Database Access denied for user 'admin'@'103.39.242.124' (using password: YES)
+2025-04-01 02:42:57 [INFO]: server is running on port 8080
+2025-04-01 02:42:57 [ERROR]: Error Connecting to Database Access denied for user 'admin'@'103.39.242.124' (using password: YES)
+2025-04-01 02:50:26 [INFO]: server is running on port 8080
+2025-04-01 02:50:28 [INFO]: Database Connected Successfully
+2025-04-01 02:50:30 [INFO]: Database Synced Successfully
+2025-04-01 04:07:04 [INFO]: server is running on port 8080
+2025-04-01 04:07:05 [INFO]: Database Connected Successfully
+2025-04-01 04:07:14 [INFO]: Database Synced Successfully
+2025-04-01 04:12:27 [INFO]: server is running on port 8080
+2025-04-01 04:12:27 [INFO]: Database Connected Successfully
+2025-04-01 04:12:35 [INFO]: Database Synced Successfully

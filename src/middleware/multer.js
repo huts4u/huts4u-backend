@@ -8,7 +8,7 @@ const upload = multer({
   storage: multers3({
     s3: s3,
     // acl: "public-read",
-    bucket: process.env.BUCKET_NAME,
+    bucket: process.env.AWS_BUCKET_NAME,
     contentType: multers3.AUTO_CONTENT_TYPE,
     key: (req, file, cb) => {
       const fileName = `${file.originalname}_${Date.now()}_${Math.round(
