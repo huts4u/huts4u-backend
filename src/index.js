@@ -24,8 +24,8 @@ app.use((req, res, next) => {
   );
   next();
 });
-const _dirname = path.dirname("");
-const buildpath = path.join(_dirname, "../../huts4u-client/build");
+
+const buildpath = path.join(__dirname, "../build");
 app.use(express.static(buildpath));
 
 //database
